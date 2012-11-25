@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view contentType="text/html; charset=UTF-8">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="Author" content="Mladen Krstić, mkrstich@gmail.com"/>
+            <meta http-equiv="Content-Language" content="en-US"/>
+            <meta name="Copyright" content="© 2011. MyBackup. All Rights Reserved."/>
+            <h:outputStylesheet library="css" name="960.css"/>
+            <h:outputStylesheet library="css" name="text.css"/>
+            <h:outputStylesheet library="css" name="master.css"/>
+            <h:outputScript library="javascript" name="captify.tiny.js"/>
+            <link rel="icon" type="image/x-icon" href="#{resource['images:favicon.ico']}"/>
+            <link rel="alternate" type="application/atom+xml"  href="#{config.getSiteUrl()}/rss" title="RSS feed"/>
+            <title><ui:insert name="pageTitle">Welcome to the MyBackup</ui:insert></title>
+            <script type="text/javascript">
+                jQuery(document).ready(function(){
+
+                    jQuery('img.captify').captify({
+                        speedOver: 'slow',
+                    // speed of the mouseout effect
+                    speedOut: 'normal',
+                    // how long to delay the hiding of the caption after mouseout (ms)
+                    hideDelay: 500,
+                    // 'fade', 'slide', 'always-on'
+                    animation: 'slide',
+                    // text/html to be placed at the beginning of every caption
+                    prefix: '',
+                    // opacity of the caption on mouse over
+                    opacity: '0.7',
+                    // the name of the CSS class to apply to the caption box
+                    className: 'caption-bottom',
+                    // position of the caption (top or bottom)
+                    position: 'bottom',
+                    // caption span % of the image
+                    spanWidth: '100%'
+                    });
+
+                    jQuery("#pageflip").hover(function() {
+                        jQuery("#pageflip img , .msg_block").stop()
+                            .animate({
+                                    width: '307px',
+                                    height: '319px'
+                            }, 500);
+                        } , function() {
+                        jQuery("#pageflip img").stop()
+                            .animate({
+                                    width: '50px',
+                                    height: '52px'
+                            }, 220);
+                        jQuery(".msg_block").stop()
+                            .animate({
+                                    width: '50px',
+                                    height: '50px'
+                            }, 200);
+                    });
+
+             });
+            </script>
+        </h:head>
+        <h:body>
+
+            <!-- navigation -->
+            <div class="container_16">
+                <div class="grid_16 navbg">
+                    <ui:insert name="menulinks">
+                        <ui:include src="/WEB-INF/templates/menulinks.xhtml"></ui:include>
+                    </ui:insert>
+                </div>
+            </div>
+            <!-- END navigation -->
+
+            <!-- header -->
+            <div class="container_16">
+                <div class="grid_16">
+                    <ui:insert name="header">
+                        <ui:include src="/WEB-INF/templates/header.xhtml"></ui:include>
+                    </ui:insert>
+                </div>
+            </div>
+            <!-- END header -->
+
+            <!-- body -->
+            <div class="container_16">
+                <div class="grid_16" id="body">
+                    <div class="grid_6  alpha">
+                        <!-- left panel -->
+                        <div id="lftPan">
+                            <ui:insert name="leftPanel">
+                                <ui:include src="/WEB-INF/templates/leftPanel.xhtml"></ui:include>
+                            </ui:insert>
+                        </div>
+                        <!-- END left panel -->
+                    </div>
+                    <div class="grid_10 omega">
+                        <ui:insert name="content">
+                            <!-- YOUR CONTENT HERE -->
+                        </ui:insert>
+                    </div>
+                </div>
+            </div>
+            <!-- END body -->
+
+            <!-- footer -->
+            <div class="container_16">
+                <div class="grid_16" id="footer">
+                    <ui:insert name="footer">
+                        <ui:include src="/WEB-INF/templates/footer.xhtml"></ui:include>
+                    </ui:insert>
+                </div>
+            </div>
+            <!-- END footer -->
+        </h:body>
+    </f:view>
+</html>

@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view contentType="text/html; charset=UTF-8">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="Author" content="Mladen Krstić, mkrstich@gmail.com"/>
+            <meta http-equiv="Content-Language" content="en-US"/>
+            <meta name="Copyright" content="© 2011. MyBackup. All Rights Reserved."/>
+            <title>Admin login - MyBackup</title>
+            <h:outputStylesheet library="css/admin" name="screen.css"/>
+
+        </h:head>
+        <body id="login-bg">
+
+            <!-- Start: login-holder -->
+            <div id="login-holder">
+
+                <!-- start logo -->
+                <div id="logo-login">
+                    <h:link value="pretty:home" target="_blank">
+                        <img src="#{facesContext.externalContext.requestContextPath}/resources/images/logo.png" width="156" height="40" alt="" />
+                    </h:link>
+                </div>
+                <!-- end logo -->
+
+                <div class="clear"></div>
+
+                <!--  start loginbox ................................................................................. -->
+                <div id="loginbox">
+
+                    <!--  start login-inner -->
+                    <div id="login-inner">
+                        <h:form>
+                            <p:messages showDetail="true" showSummary="false"/>
+                            <table border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <th>Username</th>
+                                    <td><h:inputText value="#{adminManager.admin.username}" styleClass="login-inp" required="true"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Password</th>
+                                    <td><h:inputSecret value="#{adminManager.admin.password}" styleClass="login-inp" required="true"/></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td valign="top"><input type="checkbox" class="checkbox-size" id="login-check" disabled="true"/><label for="login-check">Remember me</label></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td><h:commandButton action="#{adminManager.loginAction}" type="submit" styleClass="submit-login"/></td>
+                                </tr>
+                            </table>
+                        </h:form>
+                    </div>
+                    <!--  end login-inner -->
+                    <div class="clear"></div>
+                    <h:outputLink styleClass="forgot-pwd" value="javascript:void(0)" onclick="forgorPassDlg.show()">Forgot password?</h:outputLink>
+                    <p:dialog showEffect="slide" hideEffect="slide" modal="true"
+                              header="Password recovery" widgetVar="forgorPassDlg">
+                        <h:form>
+
+                            <h:outputText value="Your E-mail: "/>
+                            <p:inputText value="#{adminManager.admin.email}" size="25"
+                                         required="true" requiredMessage="Enter e-mail"/>
+                            <br/><br/>
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="Submit request" update="messagesPassRecovery"
+                                                 onclick="recoverPassDlg.hide()"
+                                                 action="#{adminManager.recoverPass}" />
+                                <p:commandButton value="Cancel" onclick="forgorPassDlg.hide()" type="button" />
+                            </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+                </div>
+                <!--  end loginbox -->
+
+                <!--  start forgotbox ................................................................................... -->
+                <div id="forgotbox">
+                    <div id="forgotbox-text">Please send us your email and we'll reset your password.</div>
+                    <!--  start forgot-inner -->
+                    <div id="forgot-inner">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th>Email address:</th>
+                                <td><input type="text" value=""   class="login-inp" /></td>
+                            </tr>
+                            <tr>
+                                <th> </th>
+                                <td><input type="button" class="submit-login"  /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--  end forgot-inner -->
+                    <div class="clear"></div>
+                    <a href="" class="back-login">Back to login</a>
+                </div>
+                <!--  end forgotbox -->
+
+            </div>
+            <!-- End: login-holder -->
+        </body>
+    </f:view>
+</html>

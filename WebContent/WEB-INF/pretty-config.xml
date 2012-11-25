@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.0"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.2.0
+                                   http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.2.0.xsd">
+
+  
+   
+   <rewrite trailingSlash="remove"/>
+
+   <url-mapping id="home">
+      <pattern value="/"/>
+      <view-id value="/faces/public/index.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="services">
+      <pattern value="/services"/>
+      <view-id value="/faces/public/services.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="about">
+      <pattern value="/about"/>
+      <view-id value="/faces/public/about.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="news">
+      <pattern value="/news"/>
+      <view-id value="/faces/public/news.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="buy">
+      <pattern value="/buy"/>
+      <view-id value="/faces/public/buy.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="supportedPhones">
+      <pattern value="/supported-phones"/>
+      <view-id value="/faces/public/supported-phones.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="newsItem">
+       <pattern value="/news/#{ /\\d{4}/ year}/#{ /\\d{2}/ month}/#{ /\\d{2}/ day}/#{title}" />
+      <view-id value="/faces/public/newsItem.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="contact">
+      <pattern value="/contact"/>
+      <view-id value="/faces/public/contact.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="privacyPolicy">
+      <pattern value="/privacy-policy"/>
+      <view-id value="/faces/public/privacyPolicy.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="termsOfUse">
+      <pattern value="/terms-of-use"/>
+      <view-id value="/faces/public/termsOfService.xhtml"/>
+   </url-mapping>
+   
+   <url-mapping id="signup">
+      <pattern value="/signup"/>
+      <view-id value="/faces/public/register.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="signup-completed">
+      <pattern value="/signup-completed"/>
+      <view-id value="/faces/public/successfulRegistration.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="mycontacts">
+      <pattern value="/profile/mycontacts"/>
+      <view-id value="/faces/private/listing.xhtml"/>
+   </url-mapping>
+   
+   <url-mapping id="editProfile">
+      <pattern value="/profile/edit"/>
+      <view-id value="/faces/private/editProfile.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="accountStatus">
+      <pattern value="/profile/account-status"/>
+      <view-id value="/faces/private/accountStatus.xhtml"/>
+   </url-mapping>
+   
+   <url-mapping id="logout">
+      <pattern value="/logout"/>
+      <view-id value="/faces/public/index.xhtml"/>
+      <action>#{userBean.logoutAction}</action>
+   </url-mapping>
+
+   <!-- WEB ADMIN PAGES -->
+   <url-mapping id="adminLogin">
+      <pattern value="/admin.login"/>
+      <view-id value="/faces/private/admin/login.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="adminLogout">
+      <pattern value="/admin/logout"/>
+      <view-id value="/faces/public/index.xhtml"/>
+      <action>#{adminManager.logout}</action>
+   </url-mapping>
+
+   <url-mapping id="adminHome">
+      <pattern value="/admin/home"/>
+      <view-id value="/faces/private/admin/index.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="adminAddNews">
+      <pattern value="/admin/news/add"/>
+      <view-id value="/faces/private/admin/addNewsItem.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="adminNews">
+      <pattern value="/admin/news"/>
+      <view-id value="/faces/private/admin/news.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="adminNewsItem">
+      <pattern value="/admin/news/#{ /\\d{4}/ year}/#{ /\\d{2}/ month}/#{ /\\d{2}/ day}/#{title}" />
+      <view-id value="/faces/private/admin/newsItem.xhtml"/>
+   </url-mapping>
+   <url-mapping id="adminEditNewsItem">
+      <pattern value="/admin/news/edit/#{ /\\d{4}/ year}/#{ /\\d{2}/ month}/#{ /\\d{2}/ day}/#{title}" />
+      <view-id value="/faces/private/admin/editNewsItem.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="adminUsers">
+      <pattern value="/admin/users"/>
+      <view-id value="/faces/private/admin/users.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="adminEditUser">
+      <pattern value="/admin/users/edit/#{id}" />
+      <view-id value="/faces/private/admin/editUser.xhtml"/>
+   </url-mapping>
+
+   <url-mapping id="rssFile">
+      <pattern value="/rss" />
+      <view-id value="/faces/files/feed.xml"/>
+   </url-mapping>
+
+   <url-mapping id="directActivationUrl">
+      <pattern value="/activateUser" />
+      <query-param name="phone" onPostback="false"/>
+      <query-param name="expiresDate" onPostback="false"/>
+      <view-id value="/faces/private/activateUser.xhtml"/>
+   </url-mapping>
+ 
+</pretty-config>

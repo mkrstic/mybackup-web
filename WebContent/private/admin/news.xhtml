@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces">
+    <body>
+        <ui:composition template="/WEB-INF/templates/adminMasterLayout.xhtml">
+            <ui:define name="pageTitle">News list - MyBackup admin</ui:define>
+            <ui:define name="title">
+                News
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <p:messages showDetail="true" showSummary="false"/>
+                    <p:dataTable id="newsTable" value="#{newsBean.news}" var="newsItem"
+                                 paginator="true" rows="10"  paginatorTemplate="{PreviousPageLink} {CurrentPageReport}
+                                 {NextPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15,30, 50" dynamic="true">
+                        <p:column headerText="Published date" sortBy="#{newsItem.publishedDate}">
+                            <h:outputText value="#{newsItem.publishedDate}">
+                                <f:convertDateTime type="both" dateStyle="short"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Title" sortBy="#{newsItem.title}">
+                            <h:outputText value="#{newsItem.title}"/>
+                        </p:column>
+                        <p:column headerText="Author" sortBy="#{newsItem.author}">
+                            <h:outputText value="#{newsItem.author}"/>
+                        </p:column>
+                        <p:column headerText="Summary">
+                            <pretty:link mappingId="adminNewsItem" style="text-decoration: underline;color:dodgerblue">
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'yyyy')}"/>
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'MM')}"/>
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'dd')}"/>
+                                <f:param value="#{fn:replace(newsItem.title.toLowerCase(),' ', '-')}" />
+                                <h:outputText escape="false" value="#{fn:substring(newsItem.description,0,100)}..." />
+                            </pretty:link>
+                        </p:column>
+                        <p:column headerText="Options">
+                            <pretty:link mappingId="adminEditNewsItem" style="text-decoration: underline;color:dodgerblue"
+                                         title="Edit" styleClass="icon-1 info-tooltip">
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'yyyy')}"/>
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'MM')}"/>
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'dd')}"/>
+                                <f:param value="#{fn:replace(newsItem.title.toLowerCase(),' ', '-')}" />
+                            </pretty:link>
+                            <p:commandLink ajax="false" title="Delete" styleClass="icon-2 info-tooltip"
+                                           action="#{newsBean.delete(newsItem)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <br/><br/>
+                <h:form>
+                    <p:commandButton value="Add new entry" ajax="false" action="pretty:adminAddNews"/>
+                    <p:commandButton value="Delete all entries" type="button" title="Delete all" onclick="deleteAllNewsDlg.show()"/>
+                </h:form>
+
+                <p:dialog widgetVar="deleteAllNewsDlg">
+                    <h:form>
+                        <h:outputText value="Do you really want to delete all news? This operation cannot be undone."/>
+                        <br/><br/>
+                        <p:commandButton value="No" type="button" onclick="deleteAllNewsDlg.hide()"/>
+                        <p:commandButton value="Yes, delete all" type="submit" ajax="false" action="#{newsBean.deleteAll}" onclick="deleteAllNewsDlg.hide()"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="menulinks">
+                <ui:include src="/WEB-INF/templates/menulinks.xhtml">
+                    <ui:param name="homeActive" value="true"/>
+                </ui:include>
+            </ui:define>
+
+            <ui:define name="content">
+                <!-- right top panel -->
+                <h2>Welcome</h2>
+                <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.facebook.com/pages/My-Mobile-Phone-Backup/162009913853092
+                        &amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px; position: relative; left: 50%" allowTransparency="true"></iframe>
+                <p class="vero">Welcome, guest. We are offering you mobile phone book synchronization and online backup.</p>
+                <p class="sedTxt">The objective of our service is to save and organize your data, with respection of your privacy.<span>More than just a simple backup, MyBackup allows you to organize and manage your contacts online, place them on secure place, be notified of changes and a lot of more.</span></p>
+                <pretty:link mappingId="services" title="read more" styleClass="moreaTwo">more</pretty:link>
+                <!-- END right top panel -->
+
+                <!-- right: left center panel -->
+                <div class="grid_5 alpha">
+
+                    <h2>Latest news</h2>
+                    <p class="loremtxt">We are passionate about our work and want to let you know what is done and what we plan to do.</p>
+
+                    <ui:repeat value="#{newsBean.fetchTopNews(2)}" var="newsItem" >
+                        <p class="newsthumb1">
+                            <h:outputText value="#{newsItem.publishedDate}">
+                                <f:convertDateTime pattern="dd"/>
+                            </h:outputText>
+                            <span>
+                                <h:outputText value="#{newsItem.publishedDate}">
+                                    <f:convertDateTime pattern="MM"/>
+                                </h:outputText>
+                            </span>
+                        </p>
+                        <div class="many">
+                            <h:outputText value="#{newsItem.getDescriptionFilterXml(80)}... "/>
+                            <pretty:link mappingId="newsItem" style="text-decoration: underline;color:dodgerblue">
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'yyyy')}"/>
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'MM')}"/>
+                                <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'dd')}"/>
+                                <f:param value="#{fn:replace(newsItem.title.toLowerCase(),' ', '-')}" />
+                                <h:outputText value="Read more"/>
+                            </pretty:link>
+
+                        </div>
+                    </ui:repeat>
+                </div>
+                <!-- END right: left center panel -->
+
+                <!-- right: right center panel -->
+                <div class="grid_5 omega">
+                    <div class="company">
+                        <h2>Testimonials</h2>
+                        <p class="loremtxt">Words from our dear customers</p>
+                        <p class="manyTwo"><strong>Excellent,</strong> the website and mobile application as well is very well done. It is outstanding.<i> John Eaton</i>      </p>
+                        <p class="manyTwo"><strong>This is clear and concise</strong> and offers much more than I expected. Thank you and I am looking forward to using MyBackup in the future. <i>Shannon J. Dear</i></p>
+                        <p>Read our <pretty:link mappingId="privacyPolicy" title="Privacy statement">Privacy statement</pretty:link> and <pretty:link mappingId="termsOfUse" title="Terms Of Service">Terms of Service</pretty:link> documents.</p>
+                    </div>
+                </div>
+                <!-- END right: right center panel -->
+                <div class="clear"></div>
+
+                <!-- right: right bottom panel -->
+
+                <div class="block">
+                    <p class="baner">Online support <span>We have 24/7 online support, 365 days a year.</span></p>
+                    <pretty:link mappingId="contact" title="Details" styleClass="details">Details</pretty:link>
+                </div>
+                <!-- END right: right bottom panel -->
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<app-parameters>
+    <site-url>http://localhost:8084/mybackup_hibernate</site-url>
+    <admin>
+        <name>Mladen Krstic</name>
+        <username>admin</username>
+        <password>admin</password>
+        <email>mkrstich@gmail.com</email>
+    </admin>
+    <smtp>
+        <host>mail.nadlanu.com</host>
+        <username>mladenk89@nadlanu.com</username>
+        <password>master69</password>
+        <use-auth>true</use-auth>
+        <port>25</port>
+        <automatic-mail>mkrstich@gmail.com</automatic-mail>
+        <debug-mode>true</debug-mode>
+    </smtp>
+    <database>
+        <connection-url>jdbc:mysql://localhost:3306/mybackupnew</connection-url>
+        <username>root</username>
+        <password>sa</password>
+    </database>
+</app-parameters>

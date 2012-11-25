@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <!-- FILTERS -->
+    <filter>
+        <filter-name>UserAuthCheck</filter-name>
+        <filter-class>com.pimmanager.filters.UserAuthCheck</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserAuthCheck</filter-name>
+        <url-pattern>/profile/*</url-pattern>
+        <url-pattern>/signup</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>AdminAuthCheck</filter-name>
+        <filter-class>com.pimmanager.filters.AdminAuthCheck</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminAuthCheck</filter-name>
+        <url-pattern>/admin.login</url-pattern>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    <!-- END FILTERS -->
+    <!-- PRETTY FACES CONFIG -->
+    <filter>
+        <filter-name>Pretty Filter</filter-name>
+        <filter-class>com.ocpsoft.pretty.PrettyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Pretty Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <!-- END PRETTY FACES CONFIG -->
+    <!-- PRIMEFACES CONFIG -->
+    <servlet>
+        <servlet-name>Resource Servlet</servlet-name>
+        <servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Resource Servlet</servlet-name>
+        <url-pattern>/primefaces_resource/*</url-pattern>
+    </servlet-mapping>
+    <context-param>
+        <param-name>com.sun.faces.allowTextChildren</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>aristo</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6LfMucMSAAAAAKgQHFKsUaL8uGri97BZgDr7DJ54</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6LfMucMSAAAAAItHnT_XbKAGUB6OEMVvKd8pl0L1</param-value>
+    </context-param>
+    <!-- END PRIMEFACES CONFIG -->
+    <!-- XML RPC CONFIG -->
+    <servlet>
+        <servlet-name>xmlrpcserver</servlet-name>
+        <servlet-class>com.pimmanager.webservice.XmlRpcServer</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>xmlrpcserver</servlet-name>
+        <url-pattern>/xmlrpc/*</url-pattern>
+    </servlet-mapping>
+    <!-- END XML RPC CONFIG -->
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/faces/public/index.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/faces/errorPages/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/faces/errorPages/500.xhtml</location>
+    </error-page>
+    <!-- SERVLET LISTENERS -->
+    <listener>
+        <listener-class>com.pimmanager.util.MyContextListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <!-- GLOBAL PARAMETERS -->
+    <!-- provide Java EE 6 EL -->
+    <context-param>
+        <param-name>com.sun.faces.expressionFactory</param-name>
+        <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.serializeServerState</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.compressViewState</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.numberOfViewsInSession</param-name>
+        <param-value>5</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.numberOfLogicalViews</param-name>
+        <param-value>10</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.facelets.BUFFER_SIZE</param-name>
+        <param-value>8192</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.facelets.REFRESH_PERIOD</param-name>
+        <param-value>-1</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.facelets.SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.facelets.RECREATE_VALUE_EXPRESSION_ON_BUILD_BEFORE_RESTORE</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.facelets.BUILD_BEFORE_RESTORE</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <!--  JSF RI Performance tuning -->
+    <context-param>
+        <param-name>com.sun.faces.responseBufferSize</param-name>
+        <param-value>500000</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.verifyObjects</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>faces/public/index.xhtml</welcome-file>
+    </welcome-file-list>
+    <mime-mapping>
+        <extension>ico</extension>
+        <mime-type>image/x-icon</mime-type>
+    </mime-mapping>
+</web-app>

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="pageTitle">Services - MyBackup</ui:define>
+
+            <ui:define name="menulinks">
+                <ui:include src="/WEB-INF/templates/menulinks.xhtml">
+                    <ui:param name="servicesActive" value="true"/>
+                </ui:include>
+            </ui:define>
+
+
+            <ui:define name="content">
+                <h2>Our services</h2>
+                <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.facebook.com/pages/My-Mobile-Phone-Backup/162009913853092
+                        &amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px; position: relative; left: 50%" allowTransparency="true"></iframe>
+                <br/>
+                <p>We are offering you phone book backup service. You can backup unlimited number of contacts to our server, manage them through Web interface, save on your local computer as PDF or XLS file, and much more. Application is <b>free of charge</b>. You can download it by clicking on the link below. If you have any problems, do not hesitate to <pretty:link mappingId="contact">contact us</pretty:link>.</p>
+                <br/>
+                <p>To download to your phone go to <b>#{config.getSiteUrl()}/files/mobile/mybackup.jad</b> via your mobile browser.
+                    If you are advanced user, you can download application to your computer, then transfer it to your phone.</p>
+                <p:spacer height="10"/>
+                <p style="font-weight: bold;font-size:large">New! <h:link outcome="pretty:supportedPhones" value="Click here"/> to check if your phone is supported by our service.</p>
+                <p:spacer height="10"/>
+                <h:panelGrid columns="2">
+                    <h:panelGrid columns="1">
+                        <h3>Screenshots</h3>
+                        <p:galleria effect="slide" effectSpeed="1000" style="width: 250px;height: 520px;" >
+                            <ui:repeat value="#{imageSwitchBean.imagesScreenshots()}" var="image">
+                                <h:graphicImage library="images" name="#{image}"/>
+                            </ui:repeat>
+                        </p:galleria>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" style="margin-top: -92%">
+                        <h3>Download</h3>
+                        <p:fieldset legend="MyBackup" toggleable="false" toggleSpeed="500" >
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:graphicImage alt="Java" url="#{resource['images:java_icon32x32.png']}"/>
+                                <h:panelGroup>
+                                    <p style="font-style: oblique">MyBackup 1.0 Beta (for JavaME platform)</p>
+                                    <h:form>
+                                        <h:panelGrid columns="2">
+                                            <p:commandLink ajax="false" title="Download">
+                                                <p:graphicImage alt="Download" url="#{resource['images:downloadbtn.png']}"/>
+                                                <p:fileDownload value="#{downloadBean.getZippedMyBackupJar()}"/>
+                                            </p:commandLink>
+                                            <h:link outcome="pretty:buy" title="Buy now">
+                                                <p:graphicImage alt="Download" url="#{resource['images:buynow.png']}"/>
+                                            </h:link>
+                                        </h:panelGrid>
+                                    </h:form>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

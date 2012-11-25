@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <body>
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="pageTitle">List of contacts - MyBackup</ui:define>
+
+            <ui:define name="content">
+                <h2>Your contacts</h2>
+                <p:spacer height="20"/>
+                <h:form>
+                    <p:growl id="dataTableGrowl" showDetail="true"/>
+
+                    <h:panelGrid columns="3" style="width: 200px">
+                        <h:outputText value="Save contacts as:"/>
+
+                        <h:commandLink title="Export as PDF file">
+                            <p:graphicImage value="#{resource['images:pdf_icon.png']}" alt="PDF"/>
+                            <p:dataExporter type="pdf" target="contactsTable" fileName="contacts"/>
+                        </h:commandLink>
+                        <h:commandLink title="Export as XLS file" >
+                            <p:graphicImage value="#{resource['images:xls_icon.png']}" alt="XLS"/>
+                            <p:dataExporter type="xls" target="contactsTable" fileName="contacts"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                    <p:dataTable id="contactsTable" var="contact" value="#{contactsStack.fetchContacts(userBean.user)}"
+                                 paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}
+                                 {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15,30, 50"
+                                 selectionMode="single"
+                                 selection="#{contactsStack.selectedContact}"
+                                 onRowSelectUpdate="display"
+                                 onRowUnselectUpdate="display dataTableGrowl"
+                                 onRowSelectComplete="contactDialog.show()"
+                                 style="width:95%" >
+                        <f:facet name="header">
+                            Click on contact to see detailed information
+                        </f:facet>
+                        <p:column headerText="Name" sortBy="#{contact.name}" filterBy="#{contact.name}" >
+                            <h:outputText value="#{contact.name}"/>
+                        </p:column>
+                        <p:column headerText="Phones" style="width:40%;">
+                            <p:dataList value="#{contactsStack.fetchTelephones(contact.id)}" var="tel" itemType="disc">
+                                #{tel.type} #{tel.number}
+                            </p:dataList>
+                        </p:column>
+                        <p:column headerText="Last modified" style="width:6%">
+                            <h:outputText value="#{contact.revision}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Options" style="width:4%">
+                            <p:commandLink ajax="false" title="Delete this contact" styleClass="delete_icon"
+                                           action="#{contactsStack.delete(userBean.user, contact)}"/>
+
+                        </p:column>
+                    </p:dataTable>
+                    <p:dialog header="Contact info" widgetVar="contactDialog" resizable="false" width="350"
+                              draggable="false" showEffect="scale" hideEffect="clip">
+
+                        <h:panelGrid id="display" columns="2" columnClasses="label, value"
+                                     cellpadding="10" styleClass="ui-widget-content" style="width:300px;">
+                            <f:facet name="header">
+                                <h:outputText value="#{contactsStack.selectedContact.name}"
+                                              style="font-size: 14pt; font-style: bold italic;"/>
+                            </f:facet>
+
+                            <h:outputText value="Numbers:" style="font-style: bold"/>
+                            <p:dataList value="#{contactsStack.fetchTelephones(contactsStack.selectedContact.id)}" var="tel" itemType="disc">
+                                #{tel.type} #{tel.number}
+                            </p:dataList>
+                            <p:spacer width="2"/>
+                            <p:spacer/>
+
+                            <h:outputText value="Email:" style="font-style: bold"/>
+                            <h:outputText value="#{(fn:length(contactsStack.selectedContact.email) eq 0) ? 'N/A' : contactsStack.selectedContact.email} "/>
+                            <p:spacer width="2"/>
+                            <p:spacer/>
+
+                            <h:outputText value="URL:"/>
+                            <h:outputText value="#{(fn:length(contactsStack.selectedContact.url) eq 0) ? 'N/A' : contactsStack.selectedContact.url} "/>
+                            <p:spacer width="2"/>
+                            <p:spacer/>
+
+                            <h:outputText value="Address:"/>
+                            <h:outputText value="#{(fn:length(contactsStack.selectedContact.address) eq 0) ? 'N/A' : contactsStack.selectedContact.address} "/>
+                            <p:spacer width="2"/>
+                            <p:spacer/>
+
+                            <h:outputText value="Note:"/>
+                            <h:outputText value="#{(fn:length(contactsStack.selectedContact.note) eq 0) ? 'N/A' : contactsStack.selectedContact.note} "/>
+                            <p:spacer width="2"/>
+                            <p:spacer/>
+
+                            <h:outputText value="User ID:"/>
+                            <h:outputText value="#{contactsStack.selectedContact.uid}"/>
+                            <p:spacer width="2"/>
+                            <p:spacer/>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

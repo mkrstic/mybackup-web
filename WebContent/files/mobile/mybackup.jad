@@ -1,0 +1,10 @@
+MIDlet-1: MyContacts,,pim.PimMIDlet
+MIDlet-Description: PIM backup service
+MIDlet-Jar-Size: 34813
+MIDlet-Jar-URL: mybackup.jar
+MIDlet-Name: My Backup
+MIDlet-Permissions: javax.microedition.io.Connector.http, javax.microedition.pim.ContactList.read, javax.microedition.pim.ContactList.write
+MIDlet-Vendor: My Backup Team
+MIDlet-Version: 1.0
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0

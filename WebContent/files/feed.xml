@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>MyBackup news</title>
+    <link>http://localhost:8084</link>
+    <description>MyBackup news feed.</description>
+    <dc:creator>Mladen Krsti?</dc:creator>
+  </channel>
+</rss>
+

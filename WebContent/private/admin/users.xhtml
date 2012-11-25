@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces">
+    <body>
+        <ui:composition template="/WEB-INF/templates/adminMasterLayout.xhtml">
+            <ui:define name="pageTitle">Users - MyBackup admin</ui:define>
+            <ui:define name="title">
+                Users
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <p:messages showDetail="true" showSummary="false"/>
+                    <p:dataTable id="usersTable" value="#{usersList.users}" var="user"
+                                 paginator="true" rows="10"  paginatorTemplate="{PreviousPageLink} {CurrentPageReport}
+                                 {NextPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15,30, 50" dynamic="true">
+                        <p:column headerText="Phone" sortBy="#{user.phone}">
+                            <pretty:link mappingId="adminEditUser" style="text-decoration: underline;color:dodgerblue"
+                                         title="Edit user settings">
+                                <f:param value="#{user.id}"/>
+                                <h:outputText value="#{user.phone}"/>
+                            </pretty:link>
+
+                        </p:column>
+                        <p:column headerText="Full name">
+                            <pretty:link mappingId="adminEditUser" style="text-decoration: underline;color:dodgerblue"
+                                         title="Edit user settings">
+                                <f:param value="#{user.id}"/>
+                                <h:outputText value="#{user.firstName} #{user.lastName}"/>
+                            </pretty:link>
+                        </p:column>
+                        <p:column headerText="Active">
+                            <h:outputText value="#{user.active}" style="font-weight: bold"/>
+                        </p:column>
+                        <p:column headerText="Paid">
+                            <h:outputText value="#{user.paid}" style="font-weight: bold"/>
+                        </p:column>
+                        <p:column headerText="Expiration date" >
+                            <h:outputText value="#{user.validUntil}">
+                                <f:convertDateTime timeStyle="medium" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Last synced" >
+                            <h:outputText value="#{user.lastSynced}">
+                                <f:convertDateTime pattern="MM/dd/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Options">
+                            <pretty:link mappingId="adminEditUser" style="text-decoration: underline;color:dodgerblue"
+                                         title="Edit user settings" styleClass="icon-1 info-tooltip">
+                                <f:param value="#{user.id}"/>
+                            </pretty:link>
+                            <p:commandLink ajax="false" title="Disable" styleClass="icon-3 info-tooltip"
+                                           action="#{usersList.setActive(user, false)}"
+                                           rendered="#{user.active}"/>
+                            <p:commandLink ajax="false" title="Enable" styleClass="icon-3 info-tooltip"
+                                           action="#{usersList.setActive(user, true)}"
+                                           rendered="#{not user.active}"/>
+                            <p:commandLink ajax="false" title="Delete" styleClass="icon-2 info-tooltip"
+                                           action="#{usersList.delete(user)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <br/><br/>
+                <h:form>
+                    <p:commandButton value="Delete all users" type="button" title="Delete all" onclick="deleteAllUsersDlg.show()"/>
+                </h:form>
+
+                <p:dialog widgetVar="deleteAllUsersDlg">
+                    <h:form>
+                        <h:outputText value="Do you really want to delete all users? This operation cannot be undone."/>
+                        <br/><br/>
+                        <p:commandButton value="No" type="button" onclick="deleteAllUsersDlg.hide()"/>
+                        <p:commandButton value="Yes, delete all" type="submit" ajax="false" action="#{usersList.deleteAll}" onclick="deleteAllUsersDlg.hide()"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

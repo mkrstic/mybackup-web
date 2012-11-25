@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:prettyfaces="http://ocpsoft.com/prettyfaces">
+    <h:body>
+        <ui:composition>
+            <ul class="footerlink">
+                <li><h:link outcome="pretty:home">Home</h:link></li><li>|</li>
+                <li><h:link outcome="pretty:about">About Us</h:link></li><li>|</li>
+                <li><h:link outcome="pretty:news">News</h:link></li><li>|</li>
+                <li><prettyfaces:link mappingId="services">Services</prettyfaces:link></li><li>|</li>
+                <li><prettyfaces:link mappingId="buy">Buy</prettyfaces:link></li><li>|</li>
+                <li><h:link outcome="pretty:contact">Contact Us</h:link></li><li>|</li>
+                <li>
+                    <h:link type="application/atom+xml" outcome="pretty:rssFile" title="RSS feed">
+                        <h:graphicImage alt="RSS" value="#{resource['images:rss_icon2.png']}"/>
+                    </h:link>
+                </li>
+            </ul>
+            <p class="clear">&nbsp;</p>
+            <p class="copyright">© 2011. MyBackup.com  All Rights Reserved.
+                <span>Developed By : <a href="http://mladenkrstic.iz.rs" target="_blank"
+                                       title="See my other projects">Mladen Krstić</a></span></p>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:body>
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="menulinks">
+                <ui:include src="/WEB-INF/templates/menulinks.xhtml"></ui:include>
+            </ui:define>
+
+            <ui:define name="pageTitle">Sign up - MyBackup</ui:define>
+
+            <ui:define name="content">
+                <h2>Become a member</h2>
+                <br/>
+                <h:form>
+                    <p:wizard flowListener="#{userBean.onFlowProcess}" >
+                        <p:tab id="account" title="Step 1">
+                            <p:panel header="Account details" style="width:90%">
+                                <p:messages/>
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="Phone number: *"/>
+                                    <p:spacer width="10"/>
+                                    <p:inputMask id="phone" value="#{userBean.user.phone}" mask="99999?9999999999" size="25"/>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="Choose password: *"/>
+                                    <p:spacer width="10"/>
+                                    <p:password id="registerPassword" required="true" label="Password"
+                                                value="#{userBean.user.password}" feedback="true"
+                                                promptLabel="Please enter password"
+                                                requiredMessage="#{msg.passwordRequiredMessage}"
+                                                inline="false" size="25" minLength="5"/>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="Confirm password: *"/>
+                                    <p:spacer width="10"/>
+                                    <p:password id="registerConfirmPassword" required="true" label="Confirm password" widgetVar="confirmPassWidget"
+                                                minLength="5"
+                                                requiredMessage="#{msg.confirmPasswordRequiredMessage}" feedback="false"
+                                                value="#{userBean.addUserData.confirmPassword}" size="25"
+                                                validator="MyConfirmPasswordValidator"/>
+                                </h:panelGrid>
+                                <h:outputText value="Enter letters that you see in picture below"/>
+                                <p:captcha label="Captcha" theme="clean" requiredMessage="#{msg.captchaRequiredMessage}"/>
+                                <p:tooltip for="phone" value="Phone number must be in international format, only ciphers allowed. e.g. 40223889674)"/>
+                                <p:tooltip for="registerPassword" value="Must contain at least 5 characters. Allowed A-Z, a-z and 0-9."/>
+                            </p:panel>
+
+                        </p:tab>
+                        <p:tab id="personal" title="Step 2">
+                            <p:panel header="Personal details" style="width:90%">
+                                <p:messages/>
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="First name:"/>
+                                    <p:spacer width="5"/>
+                                    <p:inputText id="firstName" value="#{userBean.user.firstName}" size="25" />
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="Last name:"/>
+                                    <p:spacer width="5"/>
+                                    <p:inputText id="lastName" value="#{userBean.user.lastName}" size="25"/>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="Gender:" />
+                                    <p:spacer width="5"/>
+                                    <h:selectOneMenu  value="#{userBean.user.gender}">
+                                        <f:selectItem itemLabel="Female" itemValue="female"/>
+                                        <f:selectItem itemLabel="Male" itemValue="male"/>
+                                    </h:selectOneMenu>
+
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+                                    <h:outputText value="Birth date:"/>
+                                    <p:spacer width="5" />
+                                    <p:calendar value="#{userBean.user.birthDate}" effect="fold" size="25"
+                                                navigator="true" readOnlyInputText="true"
+                                                mindate="01/01/1910" maxdate="12/31/2003">
+                                    </p:calendar>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="E-mail address:"/>
+                                    <p:spacer width="10"/>
+                                    <p:inputText id="registerEmail" label="E-mail address"
+                                                 value="#{userBean.user.email}" size="25"/>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="Place you live:"/>
+                                    <p:spacer width="5"/>
+                                    <p:autoComplete id="town" minQueryLength="3" maxResults="6" value="#{userBean.user.town}"
+                                                    completeMethod="#{countriesBean.cityComplete}" queryDelay="400" size="25"/>
+
+                                </h:panelGrid>
+                                <p:tooltip for="town" value="Enter first letters of city name or town where you live."/>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab id="confirm" title="Step 3">
+                            <p:panel header="Confirmation" style="width:90%">
+
+                                <p:growl id="growl" sticky="true" showDetail="true"/>
+                                <p:messages/>
+                                <h:panelGrid id="confirmation" columns="3">
+                                    <h:outputText value="Phone: " />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{userBean.user.phone}" style="font-weight: bold"/>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="First name: " />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{userBean.user.firstName}" style="font-weight: bold"/>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="Last name: " />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{userBean.user.lastName}" style="font-weight: bold"/>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="Gender: " />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{userBean.user.gender}" style="font-weight: bold"/>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="Birth date: " />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{userBean.user.birthDate}" style="font-weight: bold">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+
+                                    <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                    <h:outputText value="E-mail: " />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{userBean.user.email}" style="font-weight: bold"/>
+
+                                    <h:outputText value="City: " />
+                                    <p:spacer width="5"/>
+                                    <h:outputText value="#{userBean.user.town}" style="font-weight: bold"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="3" style="margin-top: 10px">
+                                    <p:commandButton id="registerButton" value="Sign up" update="registerPanel"
+                                                     type="submit" action="#{userBean.registerAction}" ajax="false"/>
+                                </h:panelGrid>
+                                <p:separator style="margin-bottom:3px"/>
+                                <p>By pressing 'Sign up' button, you are agree to our <h:link outcome="pretty:privacyPolicy" target="_blank">Privacy policy</h:link> and <h:link outcome="pretty:termsOfUse" target="blank">Terms of Service</h:link> documents.</p>
+                            </p:panel>
+                        </p:tab>
+                    </p:wizard>
+                    <p:ajaxStatus>
+                        <f:facet name="start">
+                            <h:graphicImage value="#{resource['images:ajaxloading.gif']}" />
+                        </f:facet>
+                        <f:facet name="complete">
+                            <h:outputText value="" />
+                        </f:facet>
+                    </p:ajaxStatus>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

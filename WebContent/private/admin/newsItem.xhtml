@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <body>
+        <ui:composition template="/WEB-INF/templates/adminMasterLayout.xhtml">
+            <ui:define name="pageTitle">News article - MyBackup admin</ui:define>
+            <ui:define name="title">
+                News article
+            </ui:define>
+            <ui:define name="content">
+                <c:choose>
+                    <c:when test="#{newsBean.findItem()}">
+                        <div style="width:90%;text-align: justify">
+                            <h2>#{newsBean.newsItem.title}</h2>
+                            <p:spacer height="20"/>
+                            <h:outputText value="#{newsBean.newsItem.publishedDate}" style="font-size: small;color: black">
+                                <f:convertDateTime type="both" dateStyle="short"/>
+                            </h:outputText>
+                            <h:outputLink value="#" style="font-size: small;color: dodgerblue">— #{newsBean.newsItem.author}</h:outputLink>
+                            <br/><br/>
+                            <h:outputText escape="false" value="#{newsBean.newsItem.description}"/>
+                            <br/><br/>
+                            <h:link outcome="pretty:adminNews" value="Back to News section" style="font-size: small;color: dodgerblue"/>
+                            <br/><br/>
+                            <h:form>
+                                <p:messages/>
+                                <h:panelGrid columns="3">
+                                    <p:commandButton value="View in website" ajax="false" type="submit" action="pretty:newsItem" title="View" >
+                                        <f:param value="#{newsBean.formatDate(newsBean.newsItem.publishedDate,'yyyy')}"/>
+                                        <f:param value="#{newsBean.formatDate(newsBean.newsItem.publishedDate,'MM')}"/>
+                                        <f:param value="#{newsBean.formatDate(newsBean.newsItem.publishedDate,'dd')}"/>
+                                        <f:param value="#{fn:replace(newsBean.newsItem.title.toLowerCase(),' ', '-')}" />
+                                    </p:commandButton>
+
+                                    <p:commandButton value="Edit" ajax="false" type="submit" action="pretty:adminEditNewsItem">
+                                        <f:param value="#{newsBean.formatDate(newsBean.newsItem.publishedDate,'yyyy')}"/>
+                                        <f:param value="#{newsBean.formatDate(newsBean.newsItem.publishedDate,'MM')}"/>
+                                        <f:param value="#{newsBean.formatDate(newsBean.newsItem.publishedDate,'dd')}"/>
+                                        <f:param value="#{fn:replace(newsBean.newsItem.title.toLowerCase(),' ', '-')}" />
+                                    </p:commandButton>
+                                    <p:commandButton value="Delete" ajax="false" type="submit" title="Delete this news article"
+                                                     action="#{newsBean.delete(newsBean.newsItem)}"/>
+                                </h:panelGrid>
+                            </h:form>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <h2>News article not found</h2>
+                        <p:spacer height="20"/>
+                        <h:outputText value=" News article with given URL not exists."/>
+                        <h:link outcome="pretty:adminNews" value="Go to News section" style="font-size: small;color: dodgerblue"/>
+                    </c:otherwise>
+                </c:choose>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

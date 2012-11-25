@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces">
+    <h:body>
+        <ui:composition>
+            <ul class="navlink">
+                <li><pretty:link mappingId="home" style="#{homeActive? 'color:#C33305':''}">Home</pretty:link></li>
+                <li><pretty:link mappingId="about" style="#{aboutActive? 'color:#C33305':''}">About Us</pretty:link></li>
+                <li><pretty:link mappingId="news" style="#{newsActive? 'color:#C33305':''}">News</pretty:link></li>
+                <li><pretty:link  mappingId="services" style="#{servicesActive? 'color:#C33305':''}">Services</pretty:link></li>
+                <li id="nodivider"><pretty:link mappingId="contact" style="#{contactActive? 'color:#C33305':''}">Contact Us</pretty:link></li>
+            </ul>
+            <div id="pageflip" >
+                <h:link type="application/atom+xml" outcome="pretty:rssFile" title="RSS feed">
+                    <h:graphicImage alt="RSS" value="#{resource['images:page_flip.png']}"/>
+                </h:link>
+                <div class="msg_block"></div>-->
+            </div>
+        </ui:composition>
+    </h:body>
+</html>
+

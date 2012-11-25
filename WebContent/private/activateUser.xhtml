@@ -1,0 +1,13 @@
+
+<f:view contentType="text/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:choose>
+        <c:when test="#{usersList.updateValidUntil(param['phone'],param['expiresDate']) eq true}">
+            SUCCESS #{usersList.getPinCodeByPhone(param['phone'])}
+        </c:when>
+        <c:otherwise>
+            FAIL #{usersList.activationErrorCode}
+        </c:otherwise>
+    </c:choose>
+</f:view>

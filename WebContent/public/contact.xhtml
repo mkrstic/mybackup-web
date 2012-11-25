@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+
+            <ui:define name="pageTitle">Contact Us - MyBackup</ui:define>
+
+            <ui:define name="menulinks">
+                <ui:include src="/WEB-INF/templates/menulinks.xhtml">
+                    <ui:param name="contactActive" value="true"/>
+                </ui:include>
+            </ui:define>
+
+            <ui:define name="content">
+                <h2>Contact us</h2>
+                <p:spacer height="10"/>
+                <p>Feel free to send us suggestions, queries, or simply share thoughts with us.</p>
+                <br/>
+                <h:form>
+                    <p:panel id="contactPanel" style="width:90%">
+                        <p:focus/>
+                        <p:messages showSummary="false" showDetail="true"/>
+                        <p>Your name:</p>
+                        <p:inputText value="#{contactUsBean.name}" maxlength="#{msg.nameMaxLength}"
+                                     style="width:300px"/>
+                        <p>E-mail address:</p>
+                        <h:panelGrid columns="2">
+                            <p:inputText id="contactEmail" value="#{contactUsBean.email}"
+                                         required="true" requiredMessage="#{msg.contactEmailRequiredMessage}"
+                                         size="40" style="width:300px">
+                            </p:inputText>
+                        </h:panelGrid>
+                        <p>Message:</p>
+                        <h:panelGrid columns="2">
+                            <p:inputTextarea id="contactMessage"
+                                             autoResize="true"
+                                             maxHeight="500"
+                                             effectDuration="500"
+                                             value="#{contactUsBean.message}"
+                                             required="true" requiredMessage="#{msg.contactMessageRequiredMessage}"
+                                             style="width:300px;height:100px">
+                            </p:inputTextarea>
+                        </h:panelGrid>
+                        <br/>
+                        <p:commandButton type="reset" value="Reset"/>
+                        <h:outputText value=" "/>
+                        <p:commandButton type="submit" value="Submit"
+                                         actionListener="#{contactUsBean.process}"
+                                         update="contactPanel"/>
+                    </p:panel>
+                </h:form>
+                <p:spacer height="10"/>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:view contentType="text/html; charset=UTF-8">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="Author" content="Mladen Krstić, mkrstich@gmail.com"/>
+            <meta http-equiv="Content-Language" content="en-US"/>
+            <meta name="Copyright" content="© 2011. MyBackup. All Rights Reserved."/>
+            <h:outputStylesheet library="css/admin" name="screen.css"/>
+            <title><ui:insert name="pageTitle">[Your page title here]</ui:insert></title>
+        </h:head>
+        <body>
+            <div id="page-top-outer">
+                <div id="page-top">
+                    <div id="logo">
+                        <a href=""><img src="#{facesContext.externalContext.requestContextPath}/resources/images/logo.png" width="156" height="40" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">&nbsp;</div>
+            <div class="nav-outer-repeat">
+                <div class="nav-outer">
+                    <div id="nav-right">
+                        <div class="nav-divider">&nbsp;</div>
+                        <div class="showhide-account"><img src="#{facesContext.externalContext.requestContextPath}/resources/images/admin/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
+                        <div class="nav-divider">&nbsp;</div>
+                        <h:form><h:commandLink action="pretty:adminLogout" id="logout"><img src="#{facesContext.externalContext.requestContextPath}/resources/images/admin/shared/nav/nav_logout.gif" width="64" height="14" alt="" style="position: relative;top:10px"/></h:commandLink></h:form>
+                        <div class="clear">&nbsp;</div>
+
+                        <div class="account-content">
+                            <div class="account-drop-inner">
+                                <a href="" id="acc-settings">Settings</a>
+                                <div class="clear">&nbsp;</div>
+                                <div class="acc-line">&nbsp;</div>
+                                <a href="" id="acc-details">Personal details </a>
+                                <div class="clear">&nbsp;</div>
+                                <div class="acc-line">&nbsp;</div>
+                                <a href="" id="acc-project">Project details</a>
+                                <div class="clear">&nbsp;</div>
+                                <div class="acc-line">&nbsp;</div>
+                                <div class="clear">&nbsp;</div>
+                                <div class="acc-line">&nbsp;</div>
+                                <a href="" id="acc-stats">Statistics</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nav">
+                        <div class="table">
+                            <ul class="select"><li><h:link outcome="pretty:adminHome"><b>Dashboard</b><!--[if IE 7]><!--></h:link><!--<![endif]--></li></ul>
+                            <ul class="select">
+                                <li><h:link outcome="pretty:adminNews"><b>News</b></h:link>
+                                    <div class="select_sub">
+                                        <ul class="sub">
+                                            <li><h:link outcome="pretty:adminAddNews">Add news</h:link></li>
+                                            <li class="sub_show"><h:link outcome="pretty:adminNews">List</h:link></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="select">
+                                <li><h:link outcome="pretty:adminUsers"><b>Users</b></h:link>
+                                    <div class="select_sub">
+                                        <ul class="sub">
+                                            <li><h:link outcome="pretty:adminUsers">List</h:link></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="select">
+                                <li><h:outputLink type="application/atom+xml" value="#{config.getSiteUrl()}/rss" target="_blank"><b>RSS feed</b></h:outputLink>
+                                    <div class="select_sub">
+                                        <ul class="sub">
+                                            <li><h:outputLink type="application/atom+xml" value="#{config.getSiteUrl()}/rss" target="_blank">View</h:outputLink></li>
+                                            <li><h:form><p:commandLink actionListener="#{rssBean.updateRss}" oncomplete="rssDialog.show()">Update RSS</p:commandLink></h:form></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p:ajaxStatus>
+                                <f:facet name="start">
+                                    <h:graphicImage value="#{resource['images:ajaxloading.gif']}" />
+                                </f:facet>
+                                <f:facet name="complete">
+                                    <h:outputText value="" />
+                                </f:facet>
+                            </p:ajaxStatus>
+
+
+                            <div class="clear"></div>
+                        </div>
+                        <p:dialog widgetVar="rssDialog">
+                            <h:outputText value="RSS feed updated             " />
+                            <p:commandButton type="button" value="Close" onclick="rssDialog.hide()"/>
+                        </p:dialog>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+
+            <div id="content-outer">
+                <!-- start content -->
+                <div id="content">
+                    <!--  start page-heading -->
+                    <div id="page-heading">
+                        <h1><ui:insert name="title">[Your title goes here]</ui:insert></h1>
+                    </div>
+                    <!-- end page-heading -->
+                    <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
+                        <tr>
+                            <th rowspan="3" class="sized"><img src="#{facesContext.externalContext.requestContextPath}/resources/images/admin/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+                            <th class="topleft"></th>
+                            <td id="tbl-border-top">&nbsp;</td>
+                            <th class="topright"></th>
+                            <th rowspan="3" class="sized"><img src="#{facesContext.externalContext.requestContextPath}/resources/images/admin/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+                        </tr>
+                        <tr>
+                            <td id="tbl-border-left"></td>
+                            <td>
+                                <!--  start content-table-inner ...................................................................... START -->
+                                <div id="content-table-inner">
+                                    <!--  start table-content  -->
+                                    <div id="table-content">
+                                        <ui:insert name="content">
+                                            [Your content goes here]
+                                        </ui:insert>
+
+                                    </div>
+                                    <!--  end table-content  -->
+                                    <div class="clear"></div>
+                                </div>
+                                <!--  end content-table-inner ............................................END  -->
+                            </td>
+                            <td id="tbl-border-right"></td>
+                        </tr>
+                        <tr>
+                            <th class="sized bottomleft"></th>
+                            <td id="tbl-border-bottom">&nbsp;</td>
+                            <th class="sized bottomright"></th>
+                        </tr>
+                    </table>
+                    <div class="clear">&nbsp;</div>
+                </div>
+                <!--  end content -->
+                <div class="clear">&nbsp;</div>
+            </div>
+            <!--  end content-outer........................................................END -->
+            <div class="clear">&nbsp;</div>
+            <!-- start footer -->
+            <div id="footer">
+                <!-- <div id="footer-pad">&nbsp;</div> -->
+                <!--  start footer-left -->
+                <div id="footer-left">
+                    Admin Skin &copy; Copyright Internet Dreams Ltd. <a href="">www.netdreams.co.uk</a>. All rights reserved.</div>
+                <!--  end footer-left -->
+                <div class="clear">&nbsp;</div>
+            </div>
+            <!-- end footer -->
+        </body>
+    </f:view>
+</html>

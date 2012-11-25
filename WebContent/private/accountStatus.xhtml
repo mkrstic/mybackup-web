@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+
+            <ui:define name="pageTitle">Account Status - MyBackup</ui:define>
+
+            <ui:define name="content">
+                <h2>Account status</h2>
+                <p:spacer height="20"/>
+                <p:panel header="" id="statusPanel" style="width:90%">
+                    <h:outputText value="Status: "/>
+                    <h:panelGroup rendered="#{userBean.user.paid}">
+                        <h:outputText style="color: green" value="Active"/>
+                        <p:spacer height="10"/>
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Activation expires on: "/>
+                            <p:spacer width="5"/>
+                            <h:outputText value="#{userBean.user.validUntil}" style="font-weight: bold">
+                                <f:convertDateTime dateStyle="medium"/>
+                            </h:outputText>
+                            <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                            <h:outputText value="Your activation PIN code:"/>
+                            <p:spacer width="5"/>
+                            <h:outputText value="#{userBean.pinCode}" style="font-weight: bold"/>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{not userBean.user.paid}">
+                        <h:outputText style="color: red" value="Inactive"/>
+                        <p:spacer height="10"/>
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Activation expired on: "/>
+                            <p:spacer width="5"/>
+                            <h:outputText value="#{userBean.user.validUntil}" style="font-weight: bold">
+                                <f:convertDateTime dateStyle="medium"/>
+                            </h:outputText>
+                        </h:panelGrid>
+                        <p:spacer height="10"/>
+                        <h:outputText value="Please, confirm your payment by entering PIN code you received, in field below."/>
+                        <p:spacer height="5"/>
+                        <h:form>
+                            <p:messages showDetail="true" showSummary="false"/>
+                            <h:panelGrid columns="3">
+                                <h:outputText value="Enter PIN code: "/>
+                                <p:spacer width="5"/>
+                                <p:password value="#{userBean.addUserData.pinCode}" requiredMessage="Enter your PIN code"
+                                            feedback="false" minLength="3" autocomplete="false"/>
+
+                                <p:spacer height="10"/><p:spacer/><p:spacer/>
+
+                                <p:commandButton value="Activate" ajax="true" update="statusPanel"
+                                                 actionListener="#{userBean.activateUserAction}"/>
+                            </h:panelGrid>
+
+                        </h:form>
+                    </h:panelGroup>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

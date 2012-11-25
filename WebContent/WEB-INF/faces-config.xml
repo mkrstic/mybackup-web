@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+<application>
+    <resource-bundle>
+        <base-name>com.pimmanager.configuration.Messages</base-name>
+        <var>msg</var>
+     </resource-bundle>
+     <message-bundle>com.pimmanager.configuration.Messages</message-bundle>
+</application>
+
+ <validator>
+     <validator-id>MyConfirmPasswordValidator</validator-id>
+     <validator-class>com.pimmanager.validation.MyConfirmPasswordValidator</validator-class>
+ </validator>
+</faces-config>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="menulinks">
+                <ui:include src="/WEB-INF/templates/menulinks.xhtml">
+                    <ui:param name="newsActive" value="true"/>
+                </ui:include>
+            </ui:define>
+            <ui:define name="pageTitle">News - MyBackup</ui:define>
+            <ui:define name="content">
+                <h2>Recent News</h2>
+                <p:spacer height="20"/>
+                <c:choose>
+                    <c:when test="#{empty newsBean.news}">
+                        <p>No articles found.</p>
+                    </c:when>
+                    <c:otherwise>
+                        <p:ajaxStatus>
+                            <f:facet name="start">
+                                <h:graphicImage value="#{resource['images:ajaxloading.gif']}" />
+                            </f:facet>
+                            <f:facet name="complete">
+                                <h:outputText value="" />
+                            </f:facet>
+                        </p:ajaxStatus>
+                        <h:form prependId="false">
+                            <div style="width:95%;text-align: left">
+                                <p:dataList value="#{newsBean.news}" var="newsItem" paginator="true"
+                                            paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"
+                                            rowsPerPageTemplate="5, 10, 15" rows="4" effectSpeed="fast" styleClass="newsList" paginatorAlwaysVisible="false" >
+                                    <p:column>
+                                        <h:outputText value="#{newsItem.publishedDate}" style="font-size: small;">
+                                            <f:convertDateTime type="both" dateStyle="medium"/>
+                                        </h:outputText>
+                                        <h:outputLink value="#" style="font-size: small;">— #{newsItem.author}</h:outputLink>
+                                        <p:spacer height="3"/>
+                                        <h:outputText value="#{newsItem.title}" style="font-weight: normal;font-size: medium"/>
+                                        <p:spacer height="10"/>
+                                        <h:outputText escape="false" value="#{fn:substring(newsItem.description.trim(),0,300)}..." />
+                                        <pretty:link mappingId="newsItem" style="text-decoration: underline;color:dodgerblue">
+                                            <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'yyyy')}"/>
+                                            <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'MM')}"/>
+                                            <f:param value="#{newsBean.formatDate(newsItem.publishedDate,'dd')}"/>
+                                            <f:param value="#{fn:replace(newsItem.title.toLowerCase(),' ', '-')}" />
+                                            <h:outputText value="Read more"/>
+                                        </pretty:link>
+                                        <p:spacer height="20"/>
+                                    </p:column>
+                                    <p:separator style="width: 500px"/>
+                                </p:dataList>
+                            </div>
+                        </h:form>
+                    </c:otherwise>
+                </c:choose>
+                <p:spacer height="10"/>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

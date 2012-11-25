@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+    <h:body>
+        <ui:composition>
+            <img src="#{resource['images:header02.jpg']}" alt="MyBackup"
+                 class="captify" style="position:relative;z-index: 0" rel="headerImageCaption"/>
+            <div id="headerImageCaption">
+                <h:outputLink value="http://www.facebook.com/pages/My-Mobile-Phone-Backup/162009913853092" target="_blank">
+                    <p:graphicImage url="#{resource['images:find_us_on_fb.png']}" title="Find us on Facebook"
+                                    alt="Find us on Facebook" style="width: 120px;height: auto"/>
+                </h:outputLink>
+            </div>
+            <div style="position:absolute; z-index:3; top:20px; width:240px; height:25px; margin-left:auto">
+            <h:link outcome="pretty:home">
+                <p:graphicImage alt="MyBackup logo" url="#{resource['images:logo.png']}"
+                                styleClass="logo" style="border: 0;"/>
+            </h:link>
+            <h1>Online backup service <span>Secure, fast and reliable cloud backup solution. Sign up today and sync your data.</span></h1>
+            </div>
+        </ui:composition>
+    </h:body>
+</html>
+

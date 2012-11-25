@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 7, 2011 12:50:15 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pimmanager.beans.Telephone" table="telephones">
+        <id name="telephoneid" type="java.lang.Integer">
+            <column name="telephoneid" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="contact" class="com.pimmanager.beans.Contact" fetch="select">
+            <column name="contactid" not-null="true" />
+        </many-to-one>
+        <property name="number" type="string">
+            <column name="number" length="20" not-null="true" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="10" />
+        </property>
+        <property name="preferred" type="java.lang.Boolean">
+            <column name="preferred" />
+        </property>
+    </class>
+</hibernate-mapping>

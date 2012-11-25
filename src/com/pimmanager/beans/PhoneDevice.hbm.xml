@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 7, 2011 12:50:15 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pimmanager.beans.PhoneDevice" table="supported_phones">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="vendor" type="string">
+            <column name="vendor" length="45" />
+        </property>
+        <property name="model" type="string">
+            <column name="model" length="45" />
+        </property>
+        <property name="imageFilePath" type="string">
+            <column name="picture_filename" length="300" />
+        </property>
+    </class>
+</hibernate-mapping>

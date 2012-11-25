@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+    <body>
+        <ui:composition template="/WEB-INF/templates/adminMasterLayout.xhtml">
+            <ui:define name="pageTitle">Add new article - MyBackup admin</ui:define>
+            <ui:define name="title">
+                Add new article
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <p:messages showDetail="true" showSummary="false"/>
+                    <h:panelGrid columns="1">
+                        <h:outputText value="Title: "/>
+
+                        <p:inputText value="#{newsBean.newsItem.title}" size="40"/>
+                        <br/>
+                        <h:outputText value="Description: "/>
+                        <p:editor value="#{newsBean.newsItem.description}" width="600" widgetVar="editor"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" style="margin-top:10px">
+                        <p:commandButton value="Submit" actionListener="#{newsBean.addItem}" ajax="false" image="ui-icon ui-icon-disk" />
+                        <p:commandButton type="button" value="Clear" action="#{newsBean.clearItem}" onclick="editor.clear()" image="ui-icon ui-icon-close" />
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

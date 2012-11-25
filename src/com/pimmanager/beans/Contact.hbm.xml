@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 7, 2011 12:50:15 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+ <class name="com.pimmanager.beans.Contact" table="contacts">
+  <id name="id" type="java.lang.Integer">
+   <column name="contactid"/>
+   <generator class="identity"/>
+  </id>
+  <many-to-one class="com.pimmanager.beans.User" fetch="select" name="user">
+   <column name="userid" not-null="true"/>
+  </many-to-one>
+  <property generated="never" lazy="false" name="name" type="string">
+   <column length="70" name="name"/>
+  </property>
+  <property generated="never" lazy="false" name="email" type="string">
+   <column length="50" name="email"/>
+  </property>
+  <property generated="never" lazy="false" name="url" type="string">
+   <column length="70" name="url"/>
+  </property>
+  <property generated="never" lazy="false" name="address" type="string">
+   <column length="70" name="address"/>
+  </property>
+  <property generated="never" lazy="false" name="note" type="string">
+   <column length="100" name="note"/>
+  </property>
+  <property generated="never" lazy="false" name="revision" type="java.util.Date">
+   <column name="revision"/>
+  </property>
+  <property generated="never" lazy="false" name="uid" type="string">
+   <column length="50" name="uid"/>
+  </property>
+  <set cascade="all" inverse="true" lazy="false" name="telephones" sort="unsorted">
+   <key>
+    <column name="contactid" not-null="true"/>
+   </key>
+   <one-to-many class="com.pimmanager.beans.Telephone"/>
+  </set>
+ </class>
+</hibernate-mapping>

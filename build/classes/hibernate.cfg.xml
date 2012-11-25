@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="">
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.connection.password">sa</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mybackupnew</property>
+  <mapping class="com.pimmanager.beans.Contact"
+   package="com.pimmanager.beans" resource="com/pimmanager/beans/Contact.hbm.xml"/>
+  <mapping class="com.pimmanager.beans.NewsItem"
+   package="com.pimmanager.beans" resource="com/pimmanager/beans/NewsItem.hbm.xml"/>
+  <mapping class="com.pimmanager.beans.PhoneDevice"
+   package="com.pimmanager.beans" resource="com/pimmanager/beans/PhoneDevice.hbm.xml"/>
+  <mapping class="com.pimmanager.beans.Telephone"
+   package="com.pimmanager.beans" resource="com/pimmanager/beans/Telephone.hbm.xml"/>
+  <mapping class="com.pimmanager.beans.User"
+   package="com.pimmanager.beans" resource="com/pimmanager/beans/User.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>

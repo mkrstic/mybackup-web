@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <body>
+        <ui:composition template="/WEB-INF/templates/adminMasterLayout.xhtml">
+            <ui:define name="pageTitle">Edit user settings - MyBackup admin</ui:define>
+            <ui:define name="title">
+                Users
+            </ui:define>
+            <ui:define name="content">
+                <c:choose>
+                    <c:when test="#{usersList.findUser()}">
+                        <p:messages showDetail="true" showSummary="false"/>
+                        <p:accordionPanel autoHeight="false" dynamic="true" cache="true">
+                            <p:tab title="Payment settings">
+                                <h:form>
+                                    <h:panelGrid columns="3">
+                                        <h:panelGrid columns="3">
+                                            <h:outputText value="Confirmed payment: "/>
+                                            <h:outputText value=" #{usersList.user.paid}" style="font-weight: bold"/>
+                                            <br/><br/>
+                                            <h:outputText value="Expiration date: "/>
+                                            <h:outputText value="#{usersList.user.validUntil}" style="font-weight: bold">
+                                                <f:convertDateTime dateStyle="medium"/>
+                                            </h:outputText>
+                                            <br/><br/>
+                                            <h:outputText value="PIN code: "/>
+                                            <h:outputText value="#{usersList.getPinCode(usersList.user)}" style="font-weight: bold"/>
+                                            <br/><br/>
+                                        </h:panelGrid>
+                                        <p:spacer width="40"/>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText value="Set up expiration date: "/>
+                                            <p/>
+                                            <p:calendar value="#{usersList.user.validUntil}" effect="fold" size="20"
+                                                        navigator="true" readOnlyInputText="true" mode="inline"
+                                                        mindate="01/01/2000">
+                                            </p:calendar>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <br/><p:spacer height="10" width="10"/>
+                                    <p:commandButton value="Update exp. date" ajax="false" action="#{usersList.updateValidUntil(false)}" type="submit"
+                                                     title="Update expiration date without generating new PIN number"/>
+                                    <p:commandButton value="Update exp. date (generate PIN)" ajax="false" action="#{usersList.updateValidUntil(true)}" type="submit"
+                                                     title="Update expiration date and generate new PIN number (recommended)"/>
+
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Usage info">
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="Registration date: "/>
+                                    <h:outputText value="#{usersList.user.dateCreated}" style="font-weight: bold">
+                                        <f:convertDateTime dateStyle="medium"/>
+                                    </h:outputText>
+                                    <br/><br/>
+                                    <h:outputText value="Last login on: "/>
+                                    <h:outputText value="#{usersList.user.dateLastLogin}" style="font-weight: bold">
+                                        <f:convertDateTime dateStyle="medium"/>
+                                    </h:outputText>
+                                    <br/><br/>
+                                    <h:outputText value="Last time synced: "/>
+                                    <h:outputText value="#{usersList.user.lastSynced}" style="font-weight: bold">
+                                        <f:convertDateTime dateStyle="medium"/>
+                                    </h:outputText>
+                                    <br/><br/>
+                                    <h:outputText value="Num. uploaded contacts: "/>
+                                    <h:outputText value="#{usersList.countContacts(usersList.user)}" style="font-weight: bold"/>
+
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Edit user settings" id="profileTab">
+                                <h:form>
+                                    <h:panelGrid columns="3">
+                                        <h:panelGrid columns="1">
+                                            <p>Phone number:</p>
+                                            <p:inputText id="phone" value="#{usersList.user.phone}" size="30"/>
+                                            <br/>
+
+                                            <p>First Name:</p>
+                                            <p:inputText value="#{usersList.user.firstName}" size="30"/>
+                                            <br/>
+
+                                            <p>Last Name:</p>
+                                            <p:inputText value="#{usersList.user.lastName}" size="30"/>
+                                            <br/>
+
+
+                                            <h:outputText value="Gender: " />
+                                            <h:selectOneMenu value="#{userBean.user.gender}">
+                                                <f:selectItem itemLabel="Female" itemValue="female"/>
+                                                <f:selectItem itemLabel="Male" itemValue="male"/>
+                                            </h:selectOneMenu>
+                                            <br/>
+                                            <p>E-mail:</p>
+                                            <p:inputText value="#{usersList.user.email}" size="30"/>
+                                            <br/>
+
+                                            <p>City:</p>
+                                            <p:inputText value="#{usersList.user.town}" size="30"/>
+                                            <br/>
+                                        </h:panelGrid>
+                                        <p:spacer width="40"/>
+                                        <h:panelGrid columns="1" rendered="false">
+                                            <h:outputText value="Birth date:"/>
+
+                                            <p:calendar value="#{usersList.user.birthDate}" effect="fold" size="30"
+                                                        navigator="true" readOnlyInputText="true" mode="inline"
+                                                        mindate="01/01/1910" maxdate="12/31/2003">
+                                            </p:calendar>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <br/>
+                                    <p:commandButton value="Submit changes" type="submit"
+                                                     action="#{usersList.updateProfile}"
+                                                     ajax="false"/>
+                                </h:form>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </c:when>
+                    <c:otherwise>
+                        <h2>User not found</h2>
+                        <p:spacer height="20"/>
+                        <h:outputText value=" User's page with given URL not exists."/>
+                        <link outcome="pretty:adminUsers" value="Go to Users" style="font-size: small;color: dodgerblue"/>
+                    </c:otherwise>
+                </c:choose>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

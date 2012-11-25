@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/templates/masterLayout.xhtml">
+            <ui:define name="menulinks">
+                <ui:include src="/WEB-INF/templates/menulinks.xhtml"/>
+            </ui:define>
+            <ui:define name="pageTitle">Buy - MyBackup</ui:define>
+
+            <ui:define name="content">
+                <h2>Supported phones</h2>
+                <p:spacer height="20"/>
+                <h:form>
+                    <p:messages showSummary="false" showDetail="true"/>
+                    <p class="aboutTxt">Please, enter your phone model to check if it is supported by our service.</p>
+                    <p:spacer height="10"/>
+                    <h:panelGrid columns="2">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Vendor: "/>
+                            <p:inputText value="#{phoneDeviceBean.phone.vendor}" size="20"
+                                         required="true" requiredMessage="Please, enter your vendor name"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Model: "/>
+                            <p:inputText value="#{phoneDeviceBean.phone.model}" size="20"
+                                         required="true" requiredMessage="Please, enter your model name"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <p:commandButton value="Submit" action="#{phoneDeviceBean.checkSupportedAction}" ajax="false"
+                                     style="margin-top: -30px"/>
+                </h:form>
+                <h:panelGrid columns="2">
+                    <h:graphicImage url="#{config.getSiteUrl()}/files/phones/#{phoneDeviceBean.phone.imageFilePath}" alt="#{phoneDeviceBean.phone.model}"/>
+                    <h:outputText value="#{phoneDeviceBean.phone.vendor} #{phoneDeviceBean.phone.model}" style="font-size: x-large"/>
+                </h:panelGrid>
+                <p:spacer height="10"/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

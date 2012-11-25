@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="/WEB-INF/templates/adminMasterLayout.xhtml">
+            <ui:define name="pageTitle">Dashboard - MyBackup admin</ui:define>
+            <ui:define name="title">
+                Welcome, #{adminManager.admin.name}
+            </ui:define>
+            <ui:define name="content">
+                <h3>Author message</h3>
+                <br/>
+                Enjoy in administation tasks.
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 7, 2011 12:50:15 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+ <class name="com.pimmanager.beans.User" table="users">
+  <id name="id" type="java.lang.Integer">
+   <column name="userid"/>
+   <generator class="identity"/>
+  </id>
+  <property generated="never" lazy="false" name="phone" type="string">
+   <column length="20" name="phone" not-null="true" unique="true"/>
+  </property>
+  <property generated="never" lazy="false" name="password" type="string">
+   <column length="20" name="passwd" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="firstName" type="string">
+   <column length="45" name="firstName"/>
+  </property>
+  <property generated="never" lazy="false" name="lastName" type="string">
+   <column length="45" name="lastName"/>
+  </property>
+  <property generated="never" lazy="false" name="email" type="string">
+   <column length="50" name="email"/>
+  </property>
+  <property generated="never" lazy="false" name="town" type="string">
+   <column length="45" name="town"/>
+  </property>
+  <property generated="never" lazy="false" name="birthDate" type="java.util.Date">
+   <column name="birthDate"/>
+  </property>
+  <property generated="never" lazy="false" name="gender" type="string">
+   <column length="20" name="gender"/>
+  </property>
+  <property generated="never" lazy="false" name="paid" type="boolean">
+   <column name="paid" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="active" type="boolean">
+   <column name="active" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="dateLastLogin" type="java.util.Date">
+   <column name="dateLastLogin"/>
+  </property>
+  <property generated="never" lazy="false" name="dateCreated" type="java.util.Date">
+   <column name="dateCreated"/>
+  </property>
+  <property generated="never" lazy="false" name="lastSynced" type="java.util.Date">
+   <column name="lastSynced"/>
+  </property>
+  <property generated="never" lazy="false" name="generatedKey" type="string">
+   <column length="45" name="generatedKey"/>
+  </property>
+  <property generated="never" lazy="false" name="validUntil" type="java.util.Date">
+   <column name="validUntil"/>
+  </property>
+  <set cascade="all" inverse="true" lazy="true" name="contacts" sort="unsorted">
+   <key>
+    <column name="userid" not-null="true"/>
+   </key>
+   <one-to-many class="com.pimmanager.beans.Contact"/>
+  </set>
+ </class>
+</hibernate-mapping>

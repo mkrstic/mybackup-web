@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="Author" content="Mladen Krstić, mkrstich@gmail.com"/>
+        <meta http-equiv="Content-Language" content="en-US"/>
+        <meta name="Copyright" content="© 2011. MyBackup. All Rights Reserved."/>
+        <h:outputStylesheet library="css" name="reset.css"/>
+        <h:outputStylesheet library="css" name="960.css"/>
+        <h:outputStylesheet library="css" name="text.css"/>
+        <h:outputStylesheet library="css" name="master.css"/>
+        <title>Server error - MyBackup</title>
+        <style type="text/css">
+            body {
+                background-image:url("#{resource['images:error_background.jpg']}");
+
+            }
+        </style>
+    </h:head>
+    <f:view contentType="text/html; charset=UTF-8">
+    <h:body styleClass="errorBody">
+        <div style="text-align: center;margin: 10% 10% 10% 10%;font-size: 40px; color: black">
+        <h:outputText style="font-size: 40px;"
+                      value="500 Server error: Oops! There was an error on server. Sorry for inconvenience."/>
+        <br/>
+        <h:link value="Go to homepage" outcome="pretty:home"/>
+        </div>
+    </h:body>
+    </f:view>
+</html>

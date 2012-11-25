@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces">
+    <h:body>
+        <ui:composition>
+            <c:choose>
+                <c:when test="#{not userBean.user.loggedIn}">
+                    <h:form styleClass="one">
+                        <p class="member">Members</p>
+                        <p:panel id="loginPanel">
+                            <p:messages showDetail="true" showSummary="false"/>
+                            <h:outputLabel for="loginPhone" value="Phone:" style="margin-top: -10px"/>
+                            <p:inputText id="loginPhone" requiredMessage="#{msg.phoneRequiredMessage}"
+                                         label="Phone number" value="#{userBean.user.phone}"/>
+                            <h:outputLabel for="loginPassword" value="Password:" style="margin-top: -5px"/>
+                            <p:password id="loginPassword" required="true" label="Password"
+                                        value="#{userBean.user.password}"
+                                        minLength="5"
+                                        promptLabel="Please enter your password"
+                                        feedback="false"
+                                        requiredMessage="#{msg.passwordRequiredMessage}"/>
+                            <p:spacer height="5"/>
+                            <p:commandButton value="Log in" update="loginPanel" title="Click to Log in" ajax="false"
+                                             type="submit" action="#{userBean.loginAction}"/>
+
+                        </p:panel>
+                    </h:form>
+
+                    <p:panel>
+                        <p class="forgot" style="margin-top: 0px;"><h:outputLink value="javascript:void(0)" onclick="recoverPassDlg.show();"><span>I forgot my password</span></h:outputLink></p>
+                        <p class="forgot" style="margin-top: 5px;"><pretty:link mappingId="signup"><span>Not a member? Sign up</span></pretty:link></p>
+                        <div class="clear"></div>
+                    </p:panel>
+
+                    <p:growl id="messagesPassRecovery" showDetail="true" />
+                    <p:confirmDialog showEffect="slide" hideEffect="slide" severity="info"
+                                     header="Password recovery" widgetVar="recoverPassDlg"
+                                     message="Please enter your phone number that you used in sign up.">
+                        <h:form>
+                            <h:outputLabel for="phone" value="Your phone:"/>
+                            <p:inputText id="phone" value="#{userBean.user.phone}" size="25" required="true"/>
+                            <p:spacer height="10"/>
+                            <p:commandButton value="Submit request" update="messagesPassRecovery"
+                                             onclick="recoverPassDlg.hide()"
+                                             actionListener="#{userBean.recoverPasswordAction}" />
+                            <p:commandButton value="Cancel" onclick="recoverPassDlg.hide()" type="button" />
+                        </h:form>
+                    </p:confirmDialog>
+                </c:when>
+                <c:otherwise>
+                    <p class="member">Welcome, #{userBean.user.firstName}</p>
+                    <br/>
+                    <h:form>
+                        <p:menu style="width: 300px;">
+                            <p:submenu label="My profile">
+                                <p:menuitem value="Manage profile" action="pretty:editProfile"
+                                            icon="ui-icon ui-icon-home" ajax="false"/>
+                                <p:menuitem value="Account status" icon="ui-icon ui-icon-arrowrefresh-1-w" ajax="false"
+                                            action="pretty:accountStatus"/>
+
+                                <p:menuitem value="Change password" icon="ui-icon ui-icon-arrowrefresh-1-w"
+                                            onclick="changePasswordDlg.show()" />
+                            </p:submenu>
+                           
+                            <p:submenu label="My contacts">
+                                <p:menuitem value="Manage my contacts" action="pretty:mycontacts"
+                                            icon="ui-icon ui-icon-star" ajax="false"/>
+                                <p:menuitem value="Delete all contacts" icon="ui-icon ui-icon-close" onclick="confirmDeletionDlg.show()"/>
+                                <p:submenu>
+                                    <p:menuitem action="pretty:logout" value="Logout" ajax="false" icon="ui-icon ui-icon-extlink"/>
+                                </p:submenu>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                    <p:growl id="messages" showDetail="true" />
+                    <p:confirmDialog header="Password editing" showEffect="slide" hideEffect="slide"
+                                     widgetVar="changePasswordDlg" severity="info"
+                                     message="Enter your old password, and repeat new one." >
+                        <h:form>
+                            <p>Old password:</p>
+                            <p:password feedback="false" value="#{userBean.addUserData.oldPassword}" minLength="#{msg.passwordMinLength}"
+                                        required="true" requiredMessage="Insert password" onshow="blind"/>
+                            <p>New password:</p>
+                            <p:password feedback="false" value="#{userBean.addUserData.newPassword}" minLength="#{msg.passwordMinLength}"
+                                        required="true" requiredMessage="Insert new password"/>
+                            <p>Confirm new password:</p>
+                            <p:password value="#{userBean.addUserData.confirmPassword}" minLength="#{msg.passwordMinLength}"
+                                        feedback="false" required="true" requiredMessage="Confirm new password"/>
+                            <p:spacer height="20"/>
+                            <p:commandButton value="Save" update="messages" onclick="changePasswordDlg.hide()"
+                                             actionListener="#{userBean.changePasswordAction}" ajax="true"/>
+                            <p:commandButton value="Cancel" onclick="changePasswordDlg.hide()"  type="reset" actionListener="#{userBean.clearAddUserData}"/>
+                        </h:form>
+                    </p:confirmDialog>
+                    <p:confirmDialog message="Do you really want to delete all saved contacts?"
+                                     showEffect="scale" hideEffect="blind"
+                                     header="Confirmation about deletion" severity="alert" widgetVar="confirmDeletionDlg">
+                        <h:form>
+                            <p:commandButton value="Yes" update="messages" onclick="confirmDeletionDlg.hide()"
+                                             actionListener="#{userBean.deleteAllContactsAction}" />
+                            <p:commandButton value="No" onclick="confirmDeletionDlg.hide()" type="button" />
+                        </h:form>
+                    </p:confirmDialog>
+                </c:otherwise>
+            </c:choose>
+
+            <h2 class="service">Our service</h2>
+            <p class="genareted" style="text-align: justify">We offering you secure, fast and helpful backup service. We protect your data. Join us, today!</p>
+            <div class="clear"></div>
+            <!--<p class="pic">&nbsp;</p>-->
+            <p:imageSwitch effect="turnDown" slideshowSpeed="6000">
+                <ui:repeat value="#{imageSwitchBean.imagesLeftPanel()}" var="image">
+                    <h:graphicImage library="images" name="#{image}" />
+                </ui:repeat>
+            </p:imageSwitch>
+            <ul class="numberLink">
+                <li style="text-align: justify"><span>01</span>Upload unlimited number of your contacts</li>
+                <li style="text-align: justify"><span>02</span>Synchronize your phone book by one click </li>
+                <li style="text-align: justify"><span>03</span>Manage contacts online through Web </li>
+            </ul>
+        </ui:composition>
+    </h:body>
+</html>
+

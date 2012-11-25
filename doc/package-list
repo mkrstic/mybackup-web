@@ -1,0 +1,8 @@
+com.pimmanager.beans
+com.pimmanager.beans.exceptions
+com.pimmanager.configuration
+com.pimmanager.filters
+com.pimmanager.logic
+com.pimmanager.util
+com.pimmanager.validation
+com.pimmanager.webservice
